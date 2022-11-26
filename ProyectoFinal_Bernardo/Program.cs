@@ -11,7 +11,7 @@ namespace MarcAdventure
             int seleccionDelUsuario = 0;
 
             //Gameloop 
-            while (seleccionDelUsuario != 5)
+            while (seleccionDelUsuario != 4)
             {
                 //Despliega la portada del juego
                 MostrarPortada();
