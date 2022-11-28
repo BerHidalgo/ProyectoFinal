@@ -93,7 +93,32 @@ namespace MarcAdventure
             Console.ReadLine();
             Console.Clear();
 
+            respuestaDelJugador = CapturarNumero();
+            juegoActual.RespuestaJugador(respuestaDelJugador);
 
+            //Avanzar o Investigar.
+            Console.WriteLine("Enemigo derrotado. Hay una puerta al final de la sala.");
+            Console.WriteLine("Podrias avanzar a la siguiente habitacion o investigar para encontrar tesoros.");
+            Console.WriteLine("1- Avanzar");
+            Console.WriteLine("2- Investigar");
+            if(juegoActual.PostCombate() == 1)
+            {
+                Console.WriteLine("Has decidido avanzar.");
+            }
+            else if (juegoActual.PostCombate() == 2)
+            {
+                Console.WriteLine("Has decidido Investigar");
+                if (juegoActual.InspeccionarHabitacion() == true)
+                {
+                    Console.WriteLine("Felicidades has encontrado un cofre");
+                }
+
+            }
+            else if (juegoActual.PostCombate() == 0)
+            {
+                Console.WriteLine("Error.");
+                Console.WriteLine("Por favor seleccione un valor entre 1 y 2");
+            }
         }
 
         //Funcion que captura lo que escribe el usuario.
