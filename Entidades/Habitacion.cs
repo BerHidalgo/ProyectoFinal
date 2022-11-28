@@ -11,14 +11,15 @@ namespace Entidades
         public string nombre;
         public int probabilidad; 
         public bool cofre;
+        public bool habitacionJefe;
 
         //Metodo Cosntructor
-        public Habitacion(string pnombre,int pprobabilidad,bool pcofre)
+        public Habitacion(string pnombre,int pprobabilidad, bool pcofre, bool habitacionJefe)
         {
             nombre = pnombre;
             probabilidad = pprobabilidad;
             cofre = pcofre;
-
+            this.habitacionJefe = habitacionJefe;
         }
     }
 }
