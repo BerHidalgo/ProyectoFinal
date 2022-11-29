@@ -17,6 +17,7 @@ namespace LogicadelJuego
         private Enemigo[] jefes;
         private  Random generardorNumeros;
         private int decisionDelUsuario;
+        
         //Hacer Metodo Contructor
         public Juego()
         {
@@ -59,9 +60,10 @@ namespace LogicadelJuego
                     
         }
         //Inspeccionar Habitacion
-        public bool InspeccionarHabitacion(int posibilidadCofre)
+        public bool InspeccionarHabitacion()
         {
-            posibilidadCofre = generardorNumeros.Next(1, 11);
+             
+            int posibilidadCofre = generardorNumeros.Next(1, 11);
             if (posibilidadCofre >= masmorra[numeroDeHabitacion].probabilidad)
             {
                 return true;
@@ -88,12 +90,10 @@ namespace LogicadelJuego
 
         //HABITACION
 
-
-
-        public int ObtenerHabitacionActual(int indice)
+        public Habitacion ObtenerHabitacionActual()
         {
-            numeroDeHabitacion = masmorra[indice];
-            return numeroDeHabitacion;
+
+            return masmorra[numeroDeHabitacion];
                
 
         }
