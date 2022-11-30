@@ -22,10 +22,14 @@ namespace LogicadelJuego
         public Juego()
         {
             //
-            this.masmorra = new Habitacion[8];
+            numeroDeHabitacion = 0;
+            this.masmorra = new Habitacion[9];
             marcjugador = new Jugador();
             enemigos = new Enemigo[20];
             jefes = new Enemigo[3];
+            CargarDatosHabitacion();
+            CargarDatosEnemigos();
+            CargarDatosJefes(); 
 
         }
 
@@ -125,10 +129,19 @@ namespace LogicadelJuego
             masmorra[6] = new Habitacion("Piso 3 Habitacion 1", 5, false, false);
             masmorra[7] = new Habitacion("Piso 3 Habitacion 2", 5, true, false);
             masmorra[8] = new Habitacion("Piso 3 Habitacion 3", 5, false, true);
-            
-           
+               
         }
-        
+        //Enemigo(string pnombreEnemigo,int pvidaEnemigo,int pataqueEnemigo,bool pjefe)
+        public void CargarDatosEnemigos()
+        {
 
+
+        }
+
+        public void CargarDatosJefes()
+        {
+
+
+        }
     }
 }
