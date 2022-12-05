@@ -13,6 +13,7 @@ namespace LogicadelJuego
         private Habitacion[] masmorra;
         //Crear indice para saber habitacion actual. Resetear indice si perdi
         private int numeroDeHabitacion;
+        private int numeroEnemigo;
         private Jugador marcjugador;
         private Enemigo[] enemigos;
         private Enemigo[] jefes;
@@ -23,6 +24,7 @@ namespace LogicadelJuego
         public Juego()
         {
             //
+            numeroEnemigo = 0;
             numeroDeHabitacion = 0;
             this.masmorra = new Habitacion[9];
             marcjugador = new Jugador();
@@ -79,6 +81,29 @@ namespace LogicadelJuego
             }
         }
 
+        //Combate
+
+        public void Combate()
+        {
+            if (numeroDeHabitacion < 2)
+            {
+                numeroEnemigo = generardorNumeros.Next(0,6);
+            }
+            else if (numeroDeHabitacion < 5)
+            {
+                numeroEnemigo = generardorNumeros.Next(6, 11);
+            }
+            else if (numeroDeHabitacion > 6)
+            {
+                numeroEnemigo = generardorNumeros.Next(11, 18);
+            }
+ 
+            while (marcjugador.vida > 0 || enemigos[numeroEnemigo].vidaEnemigo > 0)
+            {
+                Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo); 
+            }
+
+        }
         //Siguiente Habitacion
         //Atacar Enemigo
         //Concentracion del Jugador
@@ -137,30 +162,36 @@ namespace LogicadelJuego
         //20 Enemigos
         public void CargarDatosEnemigos()
         {
+            //Enemigos Faciles
             enemigos[0] = new Enemigo("Goblin Guerrero", 20, 2,false);
             enemigos[1] = new Enemigo("Goblin Hechicero", 10, 10, false);
             enemigos[2] = new Enemigo("Goblin Ladron", 10, 5, false);
-            enemigos[3] = new Enemigo("Slime", 7, 3, false);
-            enemigos[4] = new Enemigo("Zombie Guerrero", 20, 5, false);
-            enemigos[5] = new Enemigo("Necromancer", 15, 12, false);
-            enemigos[6] = new Enemigo("Esqueleto", 10, 5, false);
-            enemigos[7] = new Enemigo("Bandido Guerrero", 25, 5, false);
-            enemigos[8] = new Enemigo("Bandido Hechicero", 15, 15, false);
-            enemigos[9] = new Enemigo("Bandido", 10, 10, false);
+            enemigos[3] = new Enemigo("Goblin Arquero", 5, 5, false);
+            enemigos[4] = new Enemigo("Slime", 7, 3, false);
+            enemigos[5] = new Enemigo("Rata Grande", 2, 5, false);
+
+            //Enemigos Dificiles
+            enemigos[6] = new Enemigo("Zombie Guerrero", 20, 5, false);
+            enemigos[7] = new Enemigo("Necromancer", 15, 12, false);
+            enemigos[8] = new Enemigo("Esqueleto", 10, 5, false);
+            enemigos[9] = new Enemigo("Zombie Arquero", 5, 8, false);
             enemigos[10] = new Enemigo("Slime Grande", 10, 5, false);
-            enemigos[11] = new Enemigo("Hombre Lagarto", 30, 8, false);
-            enemigos[12] = new Enemigo("Lagarto Hechizero", 20, 15, false);
-            enemigos[13] = new Enemigo("Goblin Arquero", 5, 5, false);
-            enemigos[14] = new Enemigo("Bandido Arquero", 5, 10, false);
-            enemigos[15] = new Enemigo("Zombie Arquero", 5, 8, false);
-            enemigos[16] = new Enemigo("Lagarto Arquero", 10, 20, false);
-            enemigos[17] = new Enemigo("Rata Grande", 2, 5, false);
+
+            //Enemigos Muy Dificiles
+            enemigos[11] = new Enemigo("Bandido Arquero", 5, 10, false);
+            enemigos[12] = new Enemigo("Bandido Guerrero", 25, 5, false);
+            enemigos[13] = new Enemigo("Bandido Hechicero", 15, 15, false);
+            enemigos[14] = new Enemigo("Bandido", 10, 10, false);
+            enemigos[15] = new Enemigo("Hombre Lagarto", 30, 8, false);
+            enemigos[16] = new Enemigo("Lagarto Hechizero", 20, 15, false);
+            enemigos[17] = new Enemigo("Lagarto Arquero", 10, 20, false);
+            
 
         }
 
         public void CargarDatosJefes()
         {
-            jefes[0] = new Enemigo("Mousse el Rey Slime", 50, 5, true);
+            jefes[0] = new Enemigo("Mousse el Baboso", 50, 5, true);
             jefes[1] = new Enemigo("Dednot el Resurrector", 30, 20, true);
             jefes[2] = new Enemigo("Dis'noot el Apostrofe", 100, 10, true);
 
