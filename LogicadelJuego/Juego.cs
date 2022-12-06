@@ -66,6 +66,8 @@ namespace LogicadelJuego
             }
                     
         }
+
+
         //Inspeccionar Habitacion
         public bool InspeccionarHabitacion()
         {
@@ -81,26 +83,69 @@ namespace LogicadelJuego
             }
         }
 
-        //Combate
+       
+        //ARREGLAR OBETENERENEMIGO. ENEMIGO SE OBTIENE DEPENDIENDO DEL PISO
+        public Enemigo ObtenerEnemigoActual()
+        {
+            //if (numeroDeHabitacion < 2)
+            //{
+                //numeroEnemigo = generardorNumeros.Next(0, 6);
+           //}
+           // else if (numeroDeHabitacion < 5)
+           // {
+              //  numeroEnemigo = generardorNumeros.Next(6, 11);
+           // }
+           // else if (numeroDeHabitacion > 6)
+           // {
+               // numeroEnemigo = generardorNumeros.Next(11, 18);
+           // }
 
+            return enemigos[numeroEnemigo];
+        }
+
+        //Combate
+        //COMBATE NO LEE LOS INPUTS DEL USUARIO
         public void Combate()
         {
-            if (numeroDeHabitacion < 2)
-            {
-                numeroEnemigo = generardorNumeros.Next(0,6);
-            }
-            else if (numeroDeHabitacion < 5)
-            {
-                numeroEnemigo = generardorNumeros.Next(6, 11);
-            }
-            else if (numeroDeHabitacion > 6)
-            {
-                numeroEnemigo = generardorNumeros.Next(11, 18);
-            }
- 
+            Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo);
             while (marcjugador.vida > 0 || enemigos[numeroEnemigo].vidaEnemigo > 0)
             {
-                Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo); 
+                
+                Console.WriteLine("Que deberia de hacer Marc");
+                Console.WriteLine("1-Atacar");
+                Console.WriteLine("2-Concentracion");
+                Console.WriteLine("3-Agilidad");
+                Console.WriteLine("4-Curarse");
+                Console.WriteLine("Pociones: " + marcjugador.pociones); 
+                Console.WriteLine("Vida: " + marcjugador.vida);
+                
+
+                if (decisionDelUsuario == 1)
+                {
+                    Console.WriteLine("Marc decide atacar");
+                    Console.ReadLine();
+                }
+                else if(decisionDelUsuario == 2)
+                {
+                    Console.WriteLine("Marc empieza a Concentrarse");
+                    Console.ReadLine();
+                }
+                else if(decisionDelUsuario == 3)
+                {
+                    Console.WriteLine("Marc aumenta su velocidad");
+                    Console.ReadLine();
+                }
+                else if(decisionDelUsuario == 4)
+                {
+                    Console.WriteLine("Marc decide curarse");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Error");
+                    
+                }
+                Console.ReadLine();
             }
 
         }
