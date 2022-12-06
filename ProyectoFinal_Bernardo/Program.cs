@@ -95,9 +95,41 @@ namespace MarcAdventure
 
             respuestaDelJugador = CapturarNumero();
             juegoActual.RespuestaJugador(respuestaDelJugador);
+            //Primera Habitacion
+            Console.WriteLine("Marc esta una habitacion con una sola puerta al final");
+            Console.WriteLine("Marc se pregunta si deberia de abrir la puerta");
+            Console.WriteLine("Que decides?");
+            Console.WriteLine("1- Avanzar");
+            Console.WriteLine("2- No hacer nada");
+            while (respuestaDelJugador != 1)
+            {
+                respuestaDelJugador = CapturarNumero();
+                juegoActual.RespuestaJugador(respuestaDelJugador);
 
-            //Avanzar o Investigar.
-            Console.WriteLine("Enemigo derrotado. Hay una puerta al final de la sala.");
+                if (respuestaDelJugador == 1)
+                {
+                    Console.WriteLine("Marc decide avanzar. Al abir la puerte se ve una habitacion con un enemigo");
+                    Console.WriteLine("Sin ningun lugar para correr empieza el combate");
+                    juegoActual.ObtenerEnemigoActual();
+                }
+                else if (respuestaDelJugador == 2)
+                {
+                    Console.WriteLine("Marc decide no avanzar.");
+                    Console.WriteLine(".....");
+                    Console.WriteLine("Pasan horas y no pasa nada.");
+                    Console.WriteLine(".....");
+                }
+                
+                    
+                
+            }
+
+            // OBTENER SOLO EL NOMBRE
+
+            Console.WriteLine("Marc esta en {0}", juegoActual.ObtenerHabitacionActual());
+            juegoActual.Combate();
+                //Avanzar o Investigar.
+                Console.WriteLine("Enemigo derrotado. Hay una puerta al final de la sala.");
             Console.WriteLine("Podrias avanzar a la siguiente habitacion o investigar para encontrar tesoros.");
             Console.WriteLine("1- Avanzar");
             Console.WriteLine("2- Investigar");
@@ -135,7 +167,6 @@ namespace MarcAdventure
             {
                 Console.WriteLine("Error al escribir un numero!");
                 Console.WriteLine("Solo se aceptan numeros");
-                Console.ReadLine();
                 return -1;
             }
         }
