@@ -51,19 +51,24 @@ namespace LogicadelJuego
         //Opciones despues del combate
         public int PostCombate()
         {
+            
+            try
+            {
+                decisionDelUsuario = int.Parse(Console.ReadLine());
+            }
+            catch
+            {
+                decisionDelUsuario = 1;
+            }
 
             if (decisionDelUsuario == 1)
             {
                 return 1;
 
             }
-            else if (decisionDelUsuario == 2)
+            else 
             {
                 return 2;
-            }
-            else
-            {
-                return 0;
             }
                     
         }
@@ -108,8 +113,12 @@ namespace LogicadelJuego
         //COMBATE NO LEE LOS INPUTS DEL USUARIO
         public void Combate()
         {
+            int damageEnemigo = enemigos[numeroEnemigo].ataqueEnemigo / marcjugador.defensa;
+            int damage = marcjugador.ataque;
+            bool concentracion = false;
             Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo);
-            while (marcjugador.vida > 0 | enemigos[numeroEnemigo].vidaEnemigo > 0)
+
+            while (marcjugador.vida > 0 && enemigos[numeroEnemigo].vidaEnemigo > 0)
             {
                 
                 Console.WriteLine("Que deberia de hacer Marc");
@@ -127,21 +136,47 @@ namespace LogicadelJuego
                 {
                     decisionDelUsuario = 1;
                 }
-                int damage = marcjugador.ataque;
+                
+                
 
                 if (decisionDelUsuario == 1)
                 {
                     Console.WriteLine("Marc decide atacar");
-                    enemigos[numeroEnemigo].vidaEnemigo -= damage;
+                    var probabilidadAtaque = generardorNumeros.Next(1,11);
+                    if(probabilidadAtaque > enemigos[numeroEnemigo].evasionEnemigo)
+                    {
+                        if (concentracion == true)
+                        {
+                            int ataqueConcetracion = damage * 2;
+                            enemigos[numeroEnemigo].vidaEnemigo -= ataqueConcetracion;
+                            Console.WriteLine("Marc inflinge " + ataqueConcetracion + " al " + enemigos[numeroEnemigo].nombreEnemigo);
+                            Console.WriteLine("Vida del " + enemigos[numeroEnemigo].nombreEnemigo + " es " + enemigos[numeroEnemigo].vidaEnemigo);
+                            Console.ReadLine();
+                            concentracion = false;
+                        }
+                        else
+                        {
+                            enemigos[numeroEnemigo].vidaEnemigo -= damage;
 
-                    Console.WriteLine("Marc inflinge " + damage + " al " + enemigos[numeroEnemigo].nombreEnemigo);
-                    Console.WriteLine("Vida del "+ enemigos[numeroEnemigo].nombreEnemigo + " es " + enemigos[numeroEnemigo].vidaEnemigo);
-                    Console.ReadLine();
+                            Console.WriteLine("Marc inflinge " + damage + " al " + enemigos[numeroEnemigo].nombreEnemigo);
+                            Console.WriteLine("Vida del " + enemigos[numeroEnemigo].nombreEnemigo + " es " + enemigos[numeroEnemigo].vidaEnemigo);
+                            Console.ReadLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("El " + enemigos[numeroEnemigo].nombreEnemigo + " ha esquivado el ataque de Marc");
+                    }
 
+                    if (enemigos[numeroEnemigo].vidaEnemigo < 0)
+                    {
+                        break;
+                    }
                 }
                 else if(decisionDelUsuario == 2)
                 {
                     Console.WriteLine("Marc empieza a Concentrarse");
+                    concentracion = true;
                     Console.ReadLine();
                 }
                 else if(decisionDelUsuario == 3)
@@ -152,16 +187,37 @@ namespace LogicadelJuego
                 else if(decisionDelUsuario == 4)
                 {
                     Console.WriteLine("Marc decide curarse");
+                    if(marcjugador.vida != 50)
+                    {
+                        marcjugador.pociones -= 1;
+                        marcjugador.vida += 10;
+                        if (marcjugador.vida > 50)
+                        {
+                            marcjugador.vida = 50;
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("La vida de Marc ya esta al maximo");
+                    }
+                
                     Console.ReadLine();
                 }
-                else
-                {
-                    Console.WriteLine("Error");
-                    
-                }
-               
+
+                marcjugador.vida -= damageEnemigo;
+                Console.WriteLine("El " + enemigos[numeroEnemigo].nombreEnemigo + " inflinge " + damageEnemigo + " a Marc");
+                Console.WriteLine("Vida de Marc " + marcjugador.vida);
+                Console.ReadLine();
+                Console.Clear();
+
+
             }
 
+        }
+
+        public int ObtenerVidaJugador()
+        {
+            return marcjugador.vida;
         }
         //Siguiente Habitacion
         //Atacar Enemigo
@@ -185,6 +241,11 @@ namespace LogicadelJuego
             return masmorra[numeroDeHabitacion];
                
 
+        }
+
+        public int ObtenerNumeroHabitacion()
+        {
+            return numeroDeHabitacion;
         }
         //Avanzar de Habitacion.
         public void ProgresarHabitaciones()
@@ -222,37 +283,37 @@ namespace LogicadelJuego
         public void CargarDatosEnemigos()
         {
             //Enemigos Faciles
-            enemigos[0] = new Enemigo("Goblin Guerrero", 20, 2,false);
-            enemigos[1] = new Enemigo("Goblin Hechicero", 10, 10, false);
-            enemigos[2] = new Enemigo("Goblin Ladron", 10, 5, false);
-            enemigos[3] = new Enemigo("Goblin Arquero", 5, 5, false);
-            enemigos[4] = new Enemigo("Slime", 7, 3, false);
-            enemigos[5] = new Enemigo("Rata Grande", 2, 5, false);
+            enemigos[0] = new Enemigo("Goblin Guerrero", 20, 2,false,1);
+            enemigos[1] = new Enemigo("Goblin Hechicero", 10, 10, false,1);
+            enemigos[2] = new Enemigo("Goblin Ladron", 10, 5, false, 1);
+            enemigos[3] = new Enemigo("Goblin Arquero", 5, 5, false, 1);
+            enemigos[4] = new Enemigo("Slime", 7, 3, false, 1);
+            enemigos[5] = new Enemigo("Rata Grande", 2, 5, false, 1);
 
             //Enemigos Dificiles
-            enemigos[6] = new Enemigo("Zombie Guerrero", 20, 5, false);
-            enemigos[7] = new Enemigo("Necromancer", 15, 12, false);
-            enemigos[8] = new Enemigo("Esqueleto", 10, 5, false);
-            enemigos[9] = new Enemigo("Zombie Arquero", 5, 8, false);
-            enemigos[10] = new Enemigo("Slime Grande", 10, 5, false);
+            enemigos[6] = new Enemigo("Zombie Guerrero", 20, 5, false, 3);
+            enemigos[7] = new Enemigo("Necromancer", 15, 12, false, 3);
+            enemigos[8] = new Enemigo("Esqueleto", 10, 5, false, 3);
+            enemigos[9] = new Enemigo("Zombie Arquero", 5, 8, false, 3);
+            enemigos[10] = new Enemigo("Slime Grande", 10, 5, false, 3);
 
             //Enemigos Muy Dificiles
-            enemigos[11] = new Enemigo("Bandido Arquero", 5, 10, false);
-            enemigos[12] = new Enemigo("Bandido Guerrero", 25, 5, false);
-            enemigos[13] = new Enemigo("Bandido Hechicero", 15, 15, false);
-            enemigos[14] = new Enemigo("Bandido", 10, 10, false);
-            enemigos[15] = new Enemigo("Hombre Lagarto", 30, 8, false);
-            enemigos[16] = new Enemigo("Lagarto Hechizero", 20, 15, false);
-            enemigos[17] = new Enemigo("Lagarto Arquero", 10, 20, false);
+            enemigos[11] = new Enemigo("Bandido Arquero", 5, 10, false, 5);
+            enemigos[12] = new Enemigo("Bandido Guerrero", 25, 5, false, 5);
+            enemigos[13] = new Enemigo("Bandido Hechicero", 15, 15, false, 5);
+            enemigos[14] = new Enemigo("Bandido", 10, 10, false, 5);
+            enemigos[15] = new Enemigo("Hombre Lagarto", 30, 8, false, 5);
+            enemigos[16] = new Enemigo("Lagarto Hechizero", 20, 15, false, 5);
+            enemigos[17] = new Enemigo("Lagarto Arquero", 10, 20, false, 5);
             
 
         }
 
         public void CargarDatosJefes()
         {
-            jefes[0] = new Enemigo("Mousse el Baboso", 50, 5, true);
-            jefes[1] = new Enemigo("Dednot el Resurrector", 30, 20, true);
-            jefes[2] = new Enemigo("Dis'noot el Apostrofe", 100, 10, true);
+            jefes[0] = new Enemigo("Mousse el Baboso", 50, 5, true, 3);
+            jefes[1] = new Enemigo("Dednot el Resurrector", 30, 20, true, 5);
+            jefes[2] = new Enemigo("Dis'noot el Apostrofe", 100, 10, true, 1);
 
         }
     }
