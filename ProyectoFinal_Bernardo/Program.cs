@@ -93,14 +93,16 @@ namespace MarcAdventure
             Console.ReadLine();
             Console.Clear();
 
-            respuestaDelJugador = CapturarNumero();
-            juegoActual.RespuestaJugador(respuestaDelJugador);
+            //
             //Primera Habitacion
             Console.WriteLine("Marc esta una habitacion con una sola puerta al final");
             Console.WriteLine("Marc se pregunta si deberia de abrir la puerta");
             Console.WriteLine("Que decides?");
             Console.WriteLine("1- Avanzar");
             Console.WriteLine("2- No hacer nada");
+            respuestaDelJugador = 0;
+            
+
             while (respuestaDelJugador != 1)
             {
                 respuestaDelJugador = CapturarNumero();
@@ -110,7 +112,7 @@ namespace MarcAdventure
                 {
                     Console.WriteLine("Marc decide avanzar. Al abir la puerte se ve una habitacion con un enemigo");
                     Console.WriteLine("Sin ningun lugar para correr empieza el combate");
-                    juegoActual.ObtenerEnemigoActual();
+                   
                 }
                 else if (respuestaDelJugador == 2)
                 {
@@ -118,39 +120,72 @@ namespace MarcAdventure
                     Console.WriteLine(".....");
                     Console.WriteLine("Pasan horas y no pasa nada.");
                     Console.WriteLine(".....");
-                }
-                
-                    
-                
+                }                
             }
 
             // OBTENER SOLO EL NOMBRE
             Console.Clear();
-            Console.WriteLine("Marc esta en {0}", juegoActual.ObtenerHabitacionActual().nombre);
-            juegoActual.Combate();
-                //Avanzar o Investigar.
-                Console.WriteLine("Enemigo derrotado. Hay una puerta al final de la sala.");
-            Console.WriteLine("Podrias avanzar a la siguiente habitacion o investigar para encontrar tesoros.");
-            Console.WriteLine("1- Avanzar");
-            Console.WriteLine("2- Investigar");
-            if(juegoActual.PostCombate() == 1)
-            {
-                Console.WriteLine("Has decidido avanzar.");
-            }
-            else if (juegoActual.PostCombate() == 2)
-            {
-                Console.WriteLine("Has decidido Investigar");
-                if (juegoActual.InspeccionarHabitacion() == true)
-                {
-                    Console.WriteLine("Felicidades has encontrado un cofre");
-                }
 
-            }
-            else if (juegoActual.PostCombate() == 0)
+            //Aqui Inicia el Ciclo de entrar a una habitacion combatir y avanzar a la siguiente.
+            while (juegoActual.ObtenerNumeroHabitacion() < 3)
             {
-                Console.WriteLine("Error.");
-                Console.WriteLine("Por favor seleccione un valor entre 1 y 2");
+
+                Console.WriteLine("Marc esta en {0}", juegoActual.ObtenerHabitacionActual().nombre);
+                //Preguntar si es una habitacion de cofre.
+
+                //En caso de no ser una habitacion de cofre inicia el combate.
+                juegoActual.CargarDatosEnemigos();
+                juegoActual.ObtenerEnemigoActual();
+                juegoActual.Combate();
+                if (juegoActual.ObtenerVidaJugador() <= 0)
+                {
+                    Console.WriteLine("Marc no sobrevivio al combate");
+                    Console.ReadLine();
+                    return;
+                }
+                //Avanzar o Investigar.
+                Console.Clear();
+                Console.WriteLine("Enemigo derrotado. Hay una puerta al final de la sala.");
+                Console.WriteLine("Podrias avanzar a la siguiente habitacion o investigar para encontrar tesoros.");
+                Console.WriteLine("1- Avanzar");
+                Console.WriteLine("2- Investigar");
+
+                if (juegoActual.PostCombate() == 1)
+                {
+                    Console.WriteLine("Has decidido avanzar.");
+                    Console.ReadLine();
+
+                }
+                else if (juegoActual.PostCombate() == 2)
+                {
+                    Console.WriteLine("Has decidido Investigar");
+                    if (juegoActual.InspeccionarHabitacion() == true)
+                    {
+                        Console.WriteLine("Felicidades has encontrado un cofre");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Felicidades has encontrado a un enemigo oculto en la habitacion");
+                        Console.ReadLine();
+                        juegoActual.CargarDatosEnemigos();
+                        juegoActual.ObtenerEnemigoActual();
+                        juegoActual.Combate();
+                        if (juegoActual.ObtenerVidaJugador() <= 0)
+                        {
+                            Console.WriteLine("Marc no sobrevivio al combate");
+                            Console.ReadLine();
+                            return;
+                        }
+
+                    }
+                }
+                juegoActual.ProgresarHabitaciones();
             }
+            Console.WriteLine("Felicidades has logrado salir de la Masmorra");
+            Console.ReadLine();
+
+            //Aqui termina el ciclo del juego.
         }
 
         //Funcion que captura lo que escribe el usuario.
