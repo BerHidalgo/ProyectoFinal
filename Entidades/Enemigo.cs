@@ -12,13 +12,15 @@ namespace Entidades
         public int vidaEnemigo;
         public int ataqueEnemigo;
         public bool jefe;
+        public int evasionEnemigo;
 
-        public Enemigo(string pnombreEnemigo,int pvidaEnemigo,int pataqueEnemigo,bool pjefe)
+        public Enemigo(string pnombreEnemigo,int pvidaEnemigo,int pataqueEnemigo,bool pjefe,int pevasionEnemigo)
         {
-            nombreEnemigo = pnombreEnemigo;
+           nombreEnemigo = pnombreEnemigo;
            vidaEnemigo = pvidaEnemigo;
            ataqueEnemigo = pataqueEnemigo;
            jefe = pjefe;
+           evasionEnemigo = pevasionEnemigo;   
 
         }
 
