@@ -135,7 +135,15 @@ namespace MarcAdventure
 
                 //En caso de no ser una habitacion de cofre inicia el combate.
                 juegoActual.CargarDatosEnemigos();
-                juegoActual.ObtenerEnemigoActual();
+
+                if (juegoActual.ObtenerHabitacionActual().habitacionJefe == true)
+                {
+                    juegoActual.ObtenerJefeActual();
+                }
+                else
+                {
+                    juegoActual.ObtenerEnemigoActual();
+                }
                 juegoActual.Combate();
                 if (juegoActual.ObtenerVidaJugador() <= 0)
                 {

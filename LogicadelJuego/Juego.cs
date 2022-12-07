@@ -14,6 +14,7 @@ namespace LogicadelJuego
         //Crear indice para saber habitacion actual. Resetear indice si perdi
         private int numeroDeHabitacion;
         private int numeroEnemigo;
+        private int numeroJefe;
         private Jugador marcjugador;
         private Enemigo[] enemigos;
         private Enemigo[] jefes;
@@ -26,6 +27,7 @@ namespace LogicadelJuego
             //Incializador.
             generardorNumeros = new Random();
             numeroEnemigo = 0;
+            numeroJefe = 0;
             numeroDeHabitacion = 0;
             this.masmorra = new Habitacion[9];
             marcjugador = new Jugador();
@@ -91,21 +93,40 @@ namespace LogicadelJuego
 
        
         //ARREGLAR OBETENERENEMIGO. ENEMIGO SE OBTIENE DEPENDIENDO DEL PISO
+        public Enemigo ObtenerJefeActual()
+        {
+            if (numeroDeHabitacion == 2)
+            {
+                numeroJefe = 0;
+
+            }
+            else if (numeroDeHabitacion == 5)
+            {
+                numeroJefe = 1;
+            }
+            else if (numeroDeHabitacion == 8)
+            {
+                numeroJefe = 2;
+            }
+            return jefes[numeroJefe];
+        }
         public Enemigo ObtenerEnemigoActual()
         {
             if (numeroDeHabitacion < 2)
             {
                 numeroEnemigo = generardorNumeros.Next(0, 6);
-           }
+                    
+            }
             else if (numeroDeHabitacion < 5)
             {
                 numeroEnemigo = generardorNumeros.Next(6, 11);
+                    
             }
-            else if (numeroDeHabitacion > 6)
+            else if (numeroDeHabitacion < 8)
             {
                 numeroEnemigo = generardorNumeros.Next(11, 18);
+                    
             }
-
             return enemigos[numeroEnemigo];
         }
 
@@ -118,7 +139,7 @@ namespace LogicadelJuego
             bool concentracion = false;
             Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo);
 
-            while (marcjugador.vida > 0 && enemigos[numeroEnemigo].vidaEnemigo > 0)
+            while (marcjugador.vida >= 0 && enemigos[numeroEnemigo].vidaEnemigo >= 0 && jefes[numeroJefe].vidaEnemigo >= 0)
             {
                 
                 Console.WriteLine("Que deberia de hacer Marc");
@@ -199,9 +220,10 @@ namespace LogicadelJuego
                     else
                     {
                         Console.Write("La vida de Marc ya esta al maximo");
+                        Console.ReadLine();
                     }
                 
-                    Console.ReadLine();
+                    
                 }
 
                 marcjugador.vida -= damageEnemigo;
