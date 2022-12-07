@@ -125,8 +125,8 @@ namespace MarcAdventure
             }
 
             // OBTENER SOLO EL NOMBRE
-
-            Console.WriteLine("Marc esta en {0}", juegoActual.ObtenerHabitacionActual());
+            Console.Clear();
+            Console.WriteLine("Marc esta en {0}", juegoActual.ObtenerHabitacionActual().nombre);
             juegoActual.Combate();
                 //Avanzar o Investigar.
                 Console.WriteLine("Enemigo derrotado. Hay una puerta al final de la sala.");

@@ -23,7 +23,8 @@ namespace LogicadelJuego
         //Hacer Metodo Contructor
         public Juego()
         {
-            //
+            //Incializador.
+            generardorNumeros = new Random();
             numeroEnemigo = 0;
             numeroDeHabitacion = 0;
             this.masmorra = new Habitacion[9];
@@ -87,18 +88,18 @@ namespace LogicadelJuego
         //ARREGLAR OBETENERENEMIGO. ENEMIGO SE OBTIENE DEPENDIENDO DEL PISO
         public Enemigo ObtenerEnemigoActual()
         {
-            //if (numeroDeHabitacion < 2)
-            //{
-                //numeroEnemigo = generardorNumeros.Next(0, 6);
-           //}
-           // else if (numeroDeHabitacion < 5)
-           // {
-              //  numeroEnemigo = generardorNumeros.Next(6, 11);
-           // }
-           // else if (numeroDeHabitacion > 6)
-           // {
-               // numeroEnemigo = generardorNumeros.Next(11, 18);
-           // }
+            if (numeroDeHabitacion < 2)
+            {
+                numeroEnemigo = generardorNumeros.Next(0, 6);
+           }
+            else if (numeroDeHabitacion < 5)
+            {
+                numeroEnemigo = generardorNumeros.Next(6, 11);
+            }
+            else if (numeroDeHabitacion > 6)
+            {
+                numeroEnemigo = generardorNumeros.Next(11, 18);
+            }
 
             return enemigos[numeroEnemigo];
         }
@@ -108,7 +109,7 @@ namespace LogicadelJuego
         public void Combate()
         {
             Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo);
-            while (marcjugador.vida > 0 || enemigos[numeroEnemigo].vidaEnemigo > 0)
+            while (marcjugador.vida > 0 | enemigos[numeroEnemigo].vidaEnemigo > 0)
             {
                 
                 Console.WriteLine("Que deberia de hacer Marc");
@@ -118,12 +119,25 @@ namespace LogicadelJuego
                 Console.WriteLine("4-Curarse");
                 Console.WriteLine("Pociones: " + marcjugador.pociones); 
                 Console.WriteLine("Vida: " + marcjugador.vida);
-                
+                try
+                {
+                    decisionDelUsuario = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    decisionDelUsuario = 1;
+                }
+                int damage = marcjugador.ataque;
 
                 if (decisionDelUsuario == 1)
                 {
                     Console.WriteLine("Marc decide atacar");
+                    enemigos[numeroEnemigo].vidaEnemigo -= damage;
+
+                    Console.WriteLine("Marc inflinge " + damage + " al " + enemigos[numeroEnemigo].nombreEnemigo);
+                    Console.WriteLine("Vida del "+ enemigos[numeroEnemigo].nombreEnemigo + " es " + enemigos[numeroEnemigo].vidaEnemigo);
                     Console.ReadLine();
+
                 }
                 else if(decisionDelUsuario == 2)
                 {
@@ -145,7 +159,7 @@ namespace LogicadelJuego
                     Console.WriteLine("Error");
                     
                 }
-                Console.ReadLine();
+               
             }
 
         }
