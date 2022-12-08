@@ -139,7 +139,7 @@ namespace LogicadelJuego
             bool concentracion = false;
             Console.WriteLine("Has encontrado un " + enemigos[numeroEnemigo].nombreEnemigo);
 
-            while (marcjugador.vida >= 0 && enemigos[numeroEnemigo].vidaEnemigo >= 0 && jefes[numeroJefe].vidaEnemigo >= 0)
+            while (marcjugador.vida > 0 && enemigos[numeroEnemigo].vidaEnemigo > 0)
             {
                 
                 Console.WriteLine("Que deberia de hacer Marc");
