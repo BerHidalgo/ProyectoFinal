@@ -27,15 +27,15 @@ namespace LogicadelJuego
             //Incializador.
             generardorNumeros = new Random();
             numeroEnemigo = 0;
-            numeroJefe = 0;
+            
             numeroDeHabitacion = 0;
             this.masmorra = new Habitacion[9];
             marcjugador = new Jugador();
-            enemigos = new Enemigo[18];
-            jefes = new Enemigo[3];
+            enemigos = new Enemigo[21];
+            
             CargarDatosHabitacion();
             CargarDatosEnemigos();
-            CargarDatosJefes(); 
+             
 
         }
 
@@ -51,29 +51,7 @@ namespace LogicadelJuego
 
         }
         //Opciones despues del combate
-        public int PostCombate()
-        {
-            
-            try
-            {
-                decisionDelUsuario = int.Parse(Console.ReadLine());
-            }
-            catch
-            {
-                decisionDelUsuario = 1;
-            }
-
-            if (decisionDelUsuario == 1)
-            {
-                return 1;
-
-            }
-            else 
-            {
-                return 2;
-            }
-                    
-        }
+        
 
 
         //Inspeccionar Habitacion
@@ -91,41 +69,85 @@ namespace LogicadelJuego
             }
         }
 
-       
-        //ARREGLAR OBETENERENEMIGO. ENEMIGO SE OBTIENE DEPENDIENDO DEL PISO
-        public Enemigo ObtenerJefeActual()
+        public void ElegirTesoro()
         {
-            if (numeroDeHabitacion == 2)
+            Console.WriteLine("Dentro del cofre se encuentran 3 objetos. Pero solo te puedes lelvar uno");
+            Console.WriteLine("1-Anillo de Ataque");
+            Console.WriteLine("2-Anillo de Defensa");
+            Console.WriteLine("3-Una Pocion");
+            try
             {
-                numeroJefe = 0;
+                decisionDelUsuario = int.Parse(Console.ReadLine());
+            }
+            catch
+            {
+                decisionDelUsuario = 1;
+            }
+            if (decisionDelUsuario == 1)
+            {
+                Console.WriteLine("Haz escogido el Anillo de Ataque");
+                Console.WriteLine("El ataque de Marc aumenta +1");
+                marcjugador.ataque += 1;
+                Console.WriteLine("El ataque de Marc es " + marcjugador.ataque );
+                Console.ReadLine();
+            }
+            else if (decisionDelUsuario == 2)
+            {
+                Console.WriteLine("Haz escogido el Anillo de Defensa");
+                Console.WriteLine("La defensa de Marc aumenta +1");
+                marcjugador.defensa += 1;
+                Console.WriteLine("La defensa de Marc es " + marcjugador.defensa );
+                Console.ReadLine();
+            }
+            else if (decisionDelUsuario == 3)
+            {
+                Console.WriteLine("Haz escogido una pocion");
+                Console.WriteLine("La pociones de Marc aumentan +1");
+                marcjugador.pociones += 1;
+                Console.WriteLine("Marc tiene " +marcjugador.pociones + " pociones");
+                Console.ReadLine();
+            }
 
-            }
-            else if (numeroDeHabitacion == 5)
-            {
-                numeroJefe = 1;
-            }
-            else if (numeroDeHabitacion == 8)
-            {
-                numeroJefe = 2;
-            }
-            return jefes[numeroJefe];
+
+
         }
+        //ARREGLAR OBETENERENEMIGO. ENEMIGO SE OBTIENE DEPENDIENDO DEL PISO
+
         public Enemigo ObtenerEnemigoActual()
         {
-            if (numeroDeHabitacion < 2)
+            if (masmorra[numeroDeHabitacion].habitacionJefe == true)
             {
-                numeroEnemigo = generardorNumeros.Next(0, 6);
-                    
+                if (numeroDeHabitacion == 2)
+                {
+                    numeroEnemigo = 18;
+
+                }
+                else if (numeroDeHabitacion == 5)
+                {
+                    numeroEnemigo = 19;
+                }
+                else if (numeroDeHabitacion == 8)
+                {
+                    numeroEnemigo = 20;
+                }
             }
-            else if (numeroDeHabitacion < 5)
+            else
             {
-                numeroEnemigo = generardorNumeros.Next(6, 11);
-                    
-            }
-            else if (numeroDeHabitacion < 8)
-            {
-                numeroEnemigo = generardorNumeros.Next(11, 18);
-                    
+                if (numeroDeHabitacion < 2)
+                {
+                    numeroEnemigo = generardorNumeros.Next(0, 6);
+
+                }
+                else if (numeroDeHabitacion < 5)
+                {
+                    numeroEnemigo = generardorNumeros.Next(6, 11);
+
+                }
+                else if (numeroDeHabitacion < 8)
+                {
+                    numeroEnemigo = generardorNumeros.Next(11, 18);
+
+                }
             }
             return enemigos[numeroEnemigo];
         }
@@ -149,6 +171,7 @@ namespace LogicadelJuego
                 Console.WriteLine("4-Curarse");
                 Console.WriteLine("Pociones: " + marcjugador.pociones); 
                 Console.WriteLine("Vida: " + marcjugador.vida);
+                Console.WriteLine("Vida Enemigo: " + enemigos[numeroEnemigo].vidaEnemigo);
                 try
                 {
                     decisionDelUsuario = int.Parse(Console.ReadLine());
@@ -203,7 +226,9 @@ namespace LogicadelJuego
                 else if(decisionDelUsuario == 3)
                 {
                     Console.WriteLine("Marc aumenta su velocidad");
+                    marcjugador.agilidad += 2;
                     Console.ReadLine();
+
                 }
                 else if(decisionDelUsuario == 4)
                 {
@@ -225,12 +250,34 @@ namespace LogicadelJuego
                 
                     
                 }
+                
+                Console.WriteLine("El " + enemigos[numeroEnemigo].nombreEnemigo + "se prepara para atacar");
 
-                marcjugador.vida -= damageEnemigo;
-                Console.WriteLine("El " + enemigos[numeroEnemigo].nombreEnemigo + " inflinge " + damageEnemigo + " a Marc");
-                Console.WriteLine("Vida de Marc " + marcjugador.vida);
-                Console.ReadLine();
-                Console.Clear();
+                var probabilidadDano = generardorNumeros.Next(1, 11);
+                if (probabilidadDano > marcjugador.agilidad)
+                {
+                    if (damageEnemigo < 0)
+                    {
+                        damageEnemigo = 1;
+                    }
+                    else
+                    {
+                        marcjugador.vida -= damageEnemigo;
+                        Console.WriteLine("El " + enemigos[numeroEnemigo].nombreEnemigo + " inflinge " + damageEnemigo + " a Marc");
+                        Console.WriteLine("Vida de Marc " + marcjugador.vida);
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Marc logro esquivar el ataque del enemigo.");
+                    marcjugador.agilidad = 5;
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+               
 
 
             }
@@ -328,14 +375,10 @@ namespace LogicadelJuego
             enemigos[16] = new Enemigo("Lagarto Hechizero", 20, 15, false, 5);
             enemigos[17] = new Enemigo("Lagarto Arquero", 10, 20, false, 5);
             
-
-        }
-
-        public void CargarDatosJefes()
-        {
-            jefes[0] = new Enemigo("Mousse el Baboso", 50, 5, true, 3);
-            jefes[1] = new Enemigo("Dednot el Resurrector", 30, 20, true, 5);
-            jefes[2] = new Enemigo("Dis'noot el Apostrofe", 100, 10, true, 1);
+            //Jefes
+            enemigos[18] = new Enemigo("Mousse el Baboso", 50, 5, true, 3);
+            enemigos[19] = new Enemigo("Dednot el Resurrector", 30, 20, true, 5);
+            enemigos[20] = new Enemigo("Dis'noot el Apostrofe", 100, 10, true, 1);
 
         }
     }
