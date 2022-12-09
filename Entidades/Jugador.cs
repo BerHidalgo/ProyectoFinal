@@ -14,6 +14,7 @@ namespace Entidades
         public int ataque;
         public int defensa;
         public int pociones;
+        public int agilidad;
 
         //Metodo constructor
         public Jugador()
@@ -22,6 +23,7 @@ namespace Entidades
             ataque = 5;
             defensa = 2;
             pociones = 3;
+            agilidad = 5;
 
         }
     }
