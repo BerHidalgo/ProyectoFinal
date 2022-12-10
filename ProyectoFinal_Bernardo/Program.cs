@@ -68,13 +68,37 @@ namespace MarcAdventure
         {
             Console.Clear();
             Console.WriteLine("Instrucciones");
+            Console.WriteLine("Controles");
+            Console.WriteLine("El juego se controla con las teclas numericas 1,2,3,4.");
+            Console.WriteLine("El juego le indicara al jugador que hace cada tecla.");
+            Console.WriteLine("");
+            Console.WriteLine("Combate");
+            Console.WriteLine("Marc cuenta con varias habilidades que puede usar para enfrentarse a los enemigos");
+            Console.WriteLine("1- Atacar: Marc ataca y hace 5 daño, este daño puede aumentar dependiendo de ciertos objetos");
+            Console.WriteLine("2- Concentracion: Esta habilidad hace que el siguiente ataque de Marc haga el doble de daño");
+            Console.WriteLine("3- Agilidad: Esta habilidad aumenta en un 20% la posibilidad de Marc de esquivar el siguiente ataque enemigo");
+            Console.WriteLine("4- Curacion: Esta habilidad consume 1 pocion del inventario de Marc y cura 10 puntos de vida");
+            Console.WriteLine("");
+            Console.WriteLine("Avanzar o Investigar");
+            Console.WriteLine("Al finalizar una habitacio al jugador se le dara la opcion de avanzar o investigar.");
+            Console.WriteLine("Avanzar hace que el jugador continue a la siguiente habitacion");
+            Console.WriteLine("Investigar hace que el jugador tenga un 50% de posibilidad de encontrar un tesoro");
+            Console.WriteLine("y un 50 % de encontrar un enemigo");
+
             Console.ReadLine();
+
 
         }
 
         static public void MostrarCreditos()
         {
             Console.WriteLine("Creditos");
+            Console.WriteLine("Juego diseñado y desarrollado por:");
+            Console.WriteLine("Bernardo Hidalgo Castro");
+            Console.WriteLine("Con ayuda de:");
+            Console.WriteLine("Juan Pablo Navarro Fennell");
+            Console.WriteLine("Video:C# Tutorial Text-Based Adventure Ep1: Getting Started! ");
+            Console.WriteLine("Hecho por EnderUnknown");
             Console.ReadLine();
 
         }
@@ -123,7 +147,7 @@ namespace MarcAdventure
                 }                
             }
 
-            // OBTENER SOLO EL NOMBRE
+            
             Console.Clear();
 
             //Aqui Inicia el Ciclo de entrar a una habitacion combatir y avanzar a la siguiente.
