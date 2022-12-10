@@ -17,7 +17,6 @@ namespace LogicadelJuego
         private int numeroJefe;
         private Jugador marcjugador;
         private Enemigo[] enemigos;
-        private Enemigo[] jefes;
         private  Random generardorNumeros;
         private int decisionDelUsuario;
         
