@@ -355,7 +355,7 @@ namespace LogicadelJuego
             enemigos[1] = new Enemigo("Goblin Hechicero", 10, 10, false,1);
             enemigos[2] = new Enemigo("Goblin Ladron", 10, 5, false, 1);
             enemigos[3] = new Enemigo("Goblin Arquero", 5, 5, false, 1);
-            enemigos[4] = new Enemigo("Slime", 7, 3, false, 1);
+            enemigos[4] = new Enemigo("Yan", 7, 3, false, 1);
             enemigos[5] = new Enemigo("Rata Grande", 2, 5, false, 1);
 
             //Enemigos Dificiles
@@ -377,7 +377,7 @@ namespace LogicadelJuego
             //Jefes
             enemigos[18] = new Enemigo("Mousse el Baboso", 50, 5, true, 3);
             enemigos[19] = new Enemigo("Dednot el Resurrector", 30, 20, true, 5);
-            enemigos[20] = new Enemigo("Dis'noot el Apostrofe", 100, 10, true, 1);
+            enemigos[20] = new Enemigo("Dis'noot el Apostrofe", 100, 25, true, 1);
 
         }
     }
